@@ -32,6 +32,7 @@ HEAD = """<!DOCTYPE html>
 <html lang="ko"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="naver-site-verification" content="ebceab951bbf9e4ccd86d91d3157df28e4a3af1e">
 <title>{title}</title>
 <meta name="description" content="{desc}">
 <link rel="canonical" href="{url}">
