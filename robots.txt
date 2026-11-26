@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://rhea-listing.pages.dev/sitemap.xml
