@@ -1,0 +1,44 @@
+<!-- 아임웹 설정 > SEO > Footer Code 에 들어간 코드 사본. 아임웹은 저장 시 HTML 엔티티(&amp; 등)를 풀어버리므로 코드 안에 엔티티 문자열을 쓰지 말 것 -->
+<style>
+/* 레아: 메인 '신규 매물' 칸을 매물 사이트(rhea-listing.pages.dev) 목록으로 표시 */
+.rh-on > :not(.rh-feed){display:none!important}
+.rh-feed{width:100%;font-family:'Noto Sans KR',sans-serif}
+.rh-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:28px 16px}
+.rh-feed.rh-m .rh-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 10px}
+.rh-card{display:block;color:#111;text-decoration:none}
+.rh-thumb{aspect-ratio:3/4;overflow:hidden;background:#eee}
+.rh-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s}
+.rh-card:hover .rh-thumb img{transform:scale(1.04)}
+.rh-price{margin-top:12px;text-align:center;font-size:15px;font-weight:700;color:#16213d}
+.rh-title{margin-top:8px;font-size:13px;line-height:1.5;color:#333;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.rh-no{color:#a8885a}
+.rh-more{text-align:center;margin-top:40px}
+.rh-more a{display:inline-block;border:1px solid #16213d;color:#16213d;padding:12px 34px;font-size:14px;text-decoration:none;letter-spacing:.5px}
+.rh-more a:hover{background:#16213d;color:#fff}
+@media(max-width:767px){.rh-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:22px 10px!important}.rh-card:nth-child(n+7){display:none}.rh-more{margin-top:28px}}
+</style>
+<script>
+(function(){
+  var FEED="https://rhea-listing.pages.dev/data/listings.json";
+  var SLOTS=[{id:"w2026102288c7df5445624",n:10,m:false},{id:"w20261022487579dbd7ced",n:6,m:true}];
+  function esc(s){var M={};M[String.fromCharCode(38)]=String.fromCharCode(38)+"amp;";M["<"]=String.fromCharCode(38)+"lt;";M[">"]=String.fromCharCode(38)+"gt;";M[String.fromCharCode(34)]=String.fromCharCode(38)+"quot;";return String(s).replace(/[&<>"]/g,function(c){return M[c];});}
+  function render(d){
+    SLOTS.forEach(function(s){
+      var w=document.getElementById(s.id);
+      if(!w||w.querySelector(".rh-feed")) return;
+      var h='<div class="rh-grid">';
+      d.items.slice(0,s.n).forEach(function(it){
+        h+='<a class="rh-card" href="'+esc(it.url)+'"><div class="rh-thumb"><img src="'+esc(it.thumb)+'" alt="'+esc(it.title)+'" loading="lazy"></div>'+
+           '<div class="rh-price">'+esc(it.price)+'</div><div class="rh-title"><span class="rh-no">['+esc(it.no)+']</span> '+esc(it.title)+'</div></a>';
+      });
+      h+='</div><div class="rh-more"><a href="'+esc(d.site)+'">전체 매물 보기 →</a></div>';
+      var box=document.createElement("div"); box.className="rh-feed"+(s.m?" rh-m":""); box.innerHTML=h;
+      w.appendChild(box); w.classList.add("rh-on");
+    });
+  }
+  fetch(FEED,{cache:"no-cache"}).then(function(r){return r.json();}).then(function(d){
+    if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",function(){render(d);}); else render(d);
+    window.addEventListener("load",function(){render(d);});
+  }).catch(function(){});
+})();
+</script>
