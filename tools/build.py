@@ -136,6 +136,16 @@ def build(src_root):
         p += foot()
         open(os.path.join(d, "index.html"), "w", encoding="utf-8").write(p)
 
+    # 아임웹 메인 '신규 매물' 칸이 읽어 가는 목록 데이터 (최신 등록순)
+    os.makedirs(os.path.join(ROOT, "data"), exist_ok=True)
+    feed = [{"no": it["no"], "title": it["title"], "sub": it["sub"], "area": it["area"],
+             "price": won(it["price"]) + "원", "thumb": SITE + it["imgs"][0],
+             "url": f"{SITE}/{it['no']}/"} for it in data]
+    json.dump({"site": SITE + "/", "items": feed}, open(os.path.join(ROOT, "data", "listings.json"), "w", encoding="utf-8"),
+              ensure_ascii=False, indent=1)
+    open(os.path.join(ROOT, "_headers"), "w", encoding="utf-8").write(
+        "/data/*\n  Access-Control-Allow-Origin: *\n  Cache-Control: public, max-age=300\n")
+
     urls = [SITE + "/"] + [f"{SITE}/{it['no']}/" for it in data]
     sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     sm += "".join(f"<url><loc>{u}</loc></url>\n" for u in urls) + "</urlset>\n"
