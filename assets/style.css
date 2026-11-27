@@ -53,8 +53,13 @@ img{display:block;max-width:100%}
 .top-in{height:56px}
 .top nav a:not(.tel){display:none}
 .hero{padding:40px 0 42px}.hero h1{font-size:31px}.lead{font-size:14px}
-.grid{grid-template-columns:1fr;gap:18px}
-.cprice{font-size:25px}
+.grid{grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:56px}
+.cbody{padding:12px 8px 15px}
+.cno{font-size:10.5px;letter-spacing:0}
+.cprice{font-size:18px;margin-top:5px}.cprice span{font-size:12.5px}
+.ctitle{font-size:12.5px;margin-top:6px;line-height:1.45;word-break:keep-all}
+.csub{font-size:11px;margin-top:4px;line-height:1.45;word-break:keep-all}
+.count{margin:26px 0 12px}
 .dinfo h1{font-size:23px}.dprice{font-size:33px}
 .dimgs{margin-top:36px;margin-left:-16px;margin-right:-16px}
 body{padding-bottom:58px}
